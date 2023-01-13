@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>680</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QListWidget" name="listWidget"/>
+      </item>
+      <item>
+       <widget class="QListWidget" name="listWidget_2"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1280</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuOptions">
+    <property name="title">
+     <string>Transmitter</string>
+    </property>
+    <addaction name="actionShow_all_transmitters"/>
+    <addaction name="actionAdd_trasmitter"/>
+    <addaction name="actionRemove_trasmitter"/>
+   </widget>
+   <widget class="QMenu" name="menuLocation">
+    <property name="title">
+     <string>Location</string>
+    </property>
+    <addaction name="actionShow_all_locations"/>
+    <addaction name="actionAdd_location"/>
+    <addaction name="actionRemove_location"/>
+   </widget>
+   <widget class="QMenu" name="menuWaste_type">
+    <property name="title">
+     <string>Waste type</string>
+    </property>
+    <addaction name="actionShow_all_waste_types"/>
+    <addaction name="actionAdd_waste_type"/>
+    <addaction name="actionRemove_waste_type"/>
+   </widget>
+   <widget class="QMenu" name="menuFilter">
+    <property name="title">
+     <string>Filter</string>
+    </property>
+    <addaction name="actionBy_location"/>
+    <addaction name="actionBy_waste_type"/>
+    <addaction name="actionBy_filling_level"/>
+   </widget>
+   <addaction name="menuOptions"/>
+   <addaction name="menuLocation"/>
+   <addaction name="menuWaste_type"/>
+   <addaction name="menuFilter"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionAdd_trasmitter">
+   <property name="text">
+    <string>Add transmitter</string>
+   </property>
+  </action>
+  <action name="actionRemove_trasmitter">
+   <property name="text">
+    <string>Remove transmitter</string>
+   </property>
+  </action>
+  <action name="actionAdd_location">
+   <property name="text">
+    <string>Add location</string>
+   </property>
+  </action>
+  <action name="actionRemove_location">
+   <property name="text">
+    <string>Remove location</string>
+   </property>
+  </action>
+  <action name="actionAdd_waste_type">
+   <property name="text">
+    <string>Add waste type</string>
+   </property>
+  </action>
+  <action name="actionRemove_waste_type">
+   <property name="text">
+    <string>Remove waste type</string>
+   </property>
+  </action>
+  <action name="actionBy_location">
+   <property name="text">
+    <string>By location</string>
+   </property>
+  </action>
+  <action name="actionBy_waste_type">
+   <property name="text">
+    <string>By waste type</string>
+   </property>
+  </action>
+  <action name="actionShow_all_locations">
+   <property name="text">
+    <string>Show all locations</string>
+   </property>
+  </action>
+  <action name="actionShow_all_waste_types">
+   <property name="text">
+    <string>Show all waste types</string>
+   </property>
+  </action>
+  <action name="actionShow_all_transmitters">
+   <property name="text">
+    <string>Show all transmitters</string>
+   </property>
+  </action>
+  <action name="actionBy_filling_level">
+   <property name="text">
+    <string>By filling level</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
