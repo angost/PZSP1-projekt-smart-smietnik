@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'untitled.ui'
+## Form generated from reading UI file 'ui_main_window.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -17,7 +17,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1280, 680)
+        MainWindow.resize(689, 504)
         self.actionAdd_trasmitter = QAction(MainWindow)
         self.actionAdd_trasmitter.setObjectName(u"actionAdd_trasmitter")
         self.actionRemove_trasmitter = QAction(MainWindow)
@@ -44,27 +44,54 @@ class Ui_MainWindow(object):
         self.actionBy_filling_level.setObjectName(u"actionBy_filling_level")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.verticalLayout = QVBoxLayout(self.centralwidget)
+        self.verticalLayout_2 = QVBoxLayout(self.centralwidget)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.listWidget = QListWidget(self.centralwidget)
-        self.listWidget.setObjectName(u"listWidget")
+        self.transmitterList = QListWidget(self.centralwidget)
+        self.transmitterList.setObjectName(u"transmitterList")
 
-        self.horizontalLayout.addWidget(self.listWidget)
+        self.horizontalLayout.addWidget(self.transmitterList)
 
-        self.listWidget_2 = QListWidget(self.centralwidget)
-        self.listWidget_2.setObjectName(u"listWidget_2")
+        self.transmitterDetails = QListWidget(self.centralwidget)
+        self.transmitterDetails.setObjectName(u"transmitterDetails")
 
-        self.horizontalLayout.addWidget(self.listWidget_2)
+        self.horizontalLayout.addWidget(self.transmitterDetails)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.numberOfFull = QLabel(self.centralwidget)
+        self.numberOfFull.setObjectName(u"numberOfFull")
+
+        self.horizontalLayout_2.addWidget(self.numberOfFull)
+
+        self.progressBar = QProgressBar(self.centralwidget)
+        self.progressBar.setObjectName(u"progressBar")
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.progressBar.sizePolicy().hasHeightForWidth())
+        self.progressBar.setSizePolicy(sizePolicy)
+        self.progressBar.setValue(90)
+        self.progressBar.setOrientation(Qt.Horizontal)
+
+        self.horizontalLayout_2.addWidget(self.progressBar)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
+
+
+        self.verticalLayout_2.addLayout(self.verticalLayout)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1280, 24))
+        self.menubar.setGeometry(QRect(0, 0, 689, 24))
         self.menuOptions = QMenu(self.menubar)
         self.menuOptions.setObjectName(u"menuOptions")
         self.menuLocation = QMenu(self.menubar)
@@ -114,6 +141,7 @@ class Ui_MainWindow(object):
         self.actionShow_all_waste_types.setText(QCoreApplication.translate("MainWindow", u"Show all waste types", None))
         self.actionShow_all_transmitters.setText(QCoreApplication.translate("MainWindow", u"Show all transmitters", None))
         self.actionBy_filling_level.setText(QCoreApplication.translate("MainWindow", u"By filling level", None))
+        self.numberOfFull.setText(QCoreApplication.translate("MainWindow", u"a", None))
         self.menuOptions.setTitle(QCoreApplication.translate("MainWindow", u"Transmitter", None))
         self.menuLocation.setTitle(QCoreApplication.translate("MainWindow", u"Location", None))
         self.menuWaste_type.setTitle(QCoreApplication.translate("MainWindow", u"Waste type", None))
