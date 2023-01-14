@@ -80,7 +80,7 @@ class AddWasteTypeWindow(QWidget):
         self.ui.window_control.rejected.connect(self._reject)
 
     def _get_new_waste_type_data(self):
-        name = self.ui.enter_watse_type_name.text()
+        name = self.ui.enter_waste_type_name.text()
         if name != '':
             waste_type_data = (name,)
             insert_into_table("src/database/pythonsqlite.db", "waste_type", waste_type_data)
