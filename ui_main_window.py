@@ -48,27 +48,17 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.transmittersTable = QTableWidget(self.centralwidget)
+        self.transmittersTable.setObjectName(u"transmittersTable")
+
+        self.verticalLayout.addWidget(self.transmittersTable)
+
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.transmitterList = QListWidget(self.centralwidget)
-        self.transmitterList.setObjectName(u"transmitterList")
-
-        self.horizontalLayout.addWidget(self.transmitterList)
-
-        self.transmitterDetails = QListWidget(self.centralwidget)
-        self.transmitterDetails.setObjectName(u"transmitterDetails")
-
-        self.horizontalLayout.addWidget(self.transmitterDetails)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout)
-
-        self.horizontalLayout_2 = QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.numberOfFull = QLabel(self.centralwidget)
         self.numberOfFull.setObjectName(u"numberOfFull")
 
-        self.horizontalLayout_2.addWidget(self.numberOfFull)
+        self.horizontalLayout.addWidget(self.numberOfFull)
 
         self.progressBar = QProgressBar(self.centralwidget)
         self.progressBar.setObjectName(u"progressBar")
@@ -80,10 +70,10 @@ class Ui_MainWindow(object):
         self.progressBar.setValue(90)
         self.progressBar.setOrientation(Qt.Horizontal)
 
-        self.horizontalLayout_2.addWidget(self.progressBar)
+        self.horizontalLayout.addWidget(self.progressBar)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_2)
+        self.verticalLayout.addLayout(self.horizontalLayout)
 
 
         self.verticalLayout_2.addLayout(self.verticalLayout)

@@ -1,11 +1,9 @@
-# importy
-import sys
-import random
-import string
-from PySide2.QtWidgets import QMainWindow, QApplication, QWidget, QComboBox
-from src.database.database import insert_into_table, show_table
-from ui import Ui_MainWindow
+from PySide2.QtWidgets import QMainWindow, QApplication, QTableWidgetItem
+from src.database.database import show_table
+from PySide2.QtCore import Qt
+from ui_main_window import Ui_MainWindow
 from adding_window_classes import AddTransmitterWindow, AddLocationWindow, AddWasteTypeWindow
+from show_location_waste_type_classes import ShowLocations, ShowWasteTypes
 
 
 class Interface(QMainWindow):
@@ -13,37 +11,74 @@ class Interface(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self._show_transmitters_table()
         self.ui.actionAdd_trasmitter.triggered.connect(self._add_transmitter)
         self.ui.actionAdd_location.triggered.connect(self._add_location)
         self.ui.actionAdd_waste_type.triggered.connect(self._add_waste_type)
+        self.ui.actionShow_all_transmitters.triggered.connect(self._show_transmitters_table)
+        self.ui.actionShow_all_locations.triggered.connect(self._show_locations)
+        self.ui.actionShow_all_waste_types.triggered.connect(self._show_waste_types)
 
-    def _list_transmitters(self):
-        pass
+    def _show_transmitters_table(self):
+        trasmitters = show_table("src/database/pythonsqlite.db", "transmitter")
+        table = self.ui.transmittersTable
+        table.setRowCount(len(trasmitters))
+        table.setColumnCount(6)
+        table.setHorizontalHeaderLabels(["Id", "Waste type id", "Location id", "Active", "Full", "Text Identificator"])
+        for i, transmitter in enumerate(trasmitters):
+            is_active = "True" if transmitter[3] else "False"
+            status = "True" if transmitter[4] else "False"
+            item_id = QTableWidgetItem(str(transmitter[0]))
+            item_waste_type_id = QTableWidgetItem(str(transmitter[1]))
+            item_location_id = QTableWidgetItem(str(transmitter[2]))
+            item_is_active = QTableWidgetItem(is_active)
+            item_status = QTableWidgetItem(status)
+            item_identity = QTableWidgetItem(transmitter[5])
+            item_id.setFlags(item_id.flags() ^ Qt.ItemIsEditable)
+            item_waste_type_id.setFlags(item_waste_type_id.flags() ^ Qt.ItemIsEditable)
+            item_location_id.setFlags(item_location_id.flags() ^ Qt.ItemIsEditable)
+            item_is_active.setFlags(item_is_active.flags() ^ Qt.ItemIsEditable)
+            item_status.setFlags(item_status.flags() ^ Qt.ItemIsEditable)
+            item_identity.setFlags(item_identity.flags() ^ Qt.ItemIsEditable)
+            table.setItem(i, 0, item_id)
+            table.setItem(i, 1, item_waste_type_id)
+            table.setItem(i, 2, item_location_id)
+            table.setItem(i, 3, item_is_active)
+            table.setItem(i, 4, item_status)
+            table.setItem(i, 5, item_identity)
+            table.horizontalHeader().setStretchLastSection(True)
 
-    def _show_transmitter_data(self):
-        pass
+    def _show_locations(self):
+        self.widget = ShowLocations()
+        self.widget.show()
+
+    def _show_waste_types(self):
+        self.widget = ShowWasteTypes()
+        self.widget.show()
 
     def _add_transmitter(self):
         self.widget = AddTransmitterWindow()
         self.widget.show()
 
-    def _remove_transmitter(self):
-        pass
-
     def _add_location(self):
         self.widget = AddLocationWindow()
         self.widget.show()
-
-    def _remove_location(self):
-        pass
 
     def _add_waste_type(self):
         self.widget = AddWasteTypeWindow()
         self.widget.show()
 
+    # Kacper
+    def _remove_transmitter(self):
+        pass
+
+    def _remove_location(self):
+        pass
+
     def _remove_waste_type(self):
         pass
 
+    # filters, later
     def _show_only_given_waste_type(self):
         pass
 
@@ -54,19 +89,12 @@ class Interface(QMainWindow):
         pass
 
 
-# class NewWindow(QWidget):
-#     def __init__(self) -> None:
-#         super().__init__()
-#         self.ui = Ui_Form()
-#         self.ui.setupUi(self)
-
-
-def guiMain(args):
-    app = QApplication(args)
+def guiMain():
+    app = QApplication()
     window = Interface()
     window.show()
     return app.exec_()
 
 
 if __name__ == '__main__':
-    guiMain(sys.argv)
+    guiMain()

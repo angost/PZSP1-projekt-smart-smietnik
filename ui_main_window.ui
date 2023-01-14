@@ -18,17 +18,10 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QListWidget" name="transmitterList"/>
-        </item>
-        <item>
-         <widget class="QListWidget" name="transmitterDetails"/>
-        </item>
-       </layout>
+       <widget class="QTableWidget" name="transmittersTable"/>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QLabel" name="numberOfFull">
           <property name="text">
