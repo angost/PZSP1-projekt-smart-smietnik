@@ -1,5 +1,5 @@
 from PySide2.QtWidgets import QMainWindow, QApplication, QTableWidgetItem
-from src.database.database import show_table
+from src.database.database import show_table, show_table_depending_on
 from PySide2.QtCore import Qt
 from ui_main_window import Ui_MainWindow
 from adding_window_classes import AddTransmitterWindow, AddLocationWindow, AddWasteTypeWindow
@@ -18,6 +18,22 @@ class Interface(QMainWindow):
         self.ui.actionShow_all_transmitters.triggered.connect(self._show_transmitters_table)
         self.ui.actionShow_all_locations.triggered.connect(self._show_locations)
         self.ui.actionShow_all_waste_types.triggered.connect(self._show_waste_types)
+
+    def _get_full_and_all_dumpsters(self):
+        # trzeba dopisać końcówkę, która zwraca tylko te recordy których status to 1
+        # na razie jest to dopisane to do show_table_depending_on
+        full_list = show_table_depending_on("src/database/pythonsqlite.db", "transmitter", "status", "1")
+        table = show_table("src/database/pythonsqlite.db", "transmitter")
+        return len(full_list), len(table)
+
+    def _set_text_label(self):
+        full, all = self._get_full_and_all_dumpsters()
+        self.ui.numberOfFull.setText(f"Full dumpsters: {full}/{all}.")
+
+    def _set_progress_bar_value(self):
+        full_list, table = self._get_full_and_all_dumpsters()
+        value = int(full_list/table)*100
+        self.ui.progressBar.setValue(value)
 
     def _show_transmitters_table(self):
         trasmitters = show_table("src/database/pythonsqlite.db", "transmitter")
@@ -47,6 +63,8 @@ class Interface(QMainWindow):
             table.setItem(i, 4, item_status)
             table.setItem(i, 5, item_identity)
             table.horizontalHeader().setStretchLastSection(True)
+            self._set_text_label()
+            self._set_progress_bar_value()
 
     def _show_locations(self):
         self.widget = ShowLocations()

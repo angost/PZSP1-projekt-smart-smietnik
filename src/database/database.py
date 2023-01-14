@@ -31,7 +31,7 @@ def insert_into_table(db_file, table_name, arguments):
         query = """INSERT INTO transmitter (waste_type_id, location_id, isActive, status, identificator) VALUES (?, ?, ?, ?, ?); """
     elif table_name == "waste_type":
         query = """INSERT INTO waste_type (name) VALUES (?); """
-    operate_on_database(db_file, query, arguments)
+    return operate_on_database(db_file, query, arguments)
 
 
 def update_transmitter_status(db_file, arguments):
@@ -55,10 +55,23 @@ def show_table(db_file, table_name):
         query = """ SELECT * FROM transmitter"""
     elif table_name == "waste_type":
         query = """ SELECT * FROM waste_type"""
+    # dopisane
     elif table_name == "location":
         query = """ SELECT * FROM location"""
 
     return operate_on_database(db_file, query, arguments=None)
+
+
+def show_table_depending_on(db_file, table_name, column, id):
+    global query
+    if table_name == "transmitter" and column == "location_id":
+        query = """ SELECT * FROM transmitter WHERE location_id = ?"""
+    elif table_name == "transmitter" and column == "waste_type_id":
+        query = """ SELECT * FROM transmitter WHERE waste_type_id = ?"""
+    # dopisane
+    elif table_name == "transmitter" and column == "status":
+        query = """ SELECT * FROM transmitter WHERE status = ?"""
+    return operate_on_database(db_file, query, id)
 
 
 def delete_record(db_file, table_name, id):
@@ -129,3 +142,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
