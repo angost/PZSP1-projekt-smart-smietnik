@@ -24,9 +24,22 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
+     <spacer name="verticalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
      <widget class="QLabel" name="add_waste_type_label">
       <property name="text">
-       <string>Create new waste type</string>
+       <string>Enter new waste type info:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -40,6 +53,9 @@
      <spacer name="verticalSpacer_2">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Minimum</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
@@ -58,7 +74,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Enter new waste type name:</string>
+       <string>Waste type name</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -81,7 +97,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QLineEdit" name="enter_watse_type_name">
+       <widget class="QLineEdit" name="enter_waste_type_name">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
           <horstretch>0</horstretch>

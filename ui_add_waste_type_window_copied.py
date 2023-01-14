@@ -14,6 +14,10 @@ class Ui_Form(object):
         self.verticalLayout_4 = QVBoxLayout(self.layoutWidget)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_4.addItem(self.verticalSpacer_4)
+
         self.add_waste_type_label = QLabel(self.layoutWidget)
         self.add_waste_type_label.setObjectName(u"add_waste_type_label")
         self.add_waste_type_label.setAlignment(Qt.AlignCenter)
@@ -21,7 +25,7 @@ class Ui_Form(object):
 
         self.verticalLayout_4.addWidget(self.add_waste_type_label)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Minimum)
 
         self.verticalLayout_4.addItem(self.verticalSpacer_2)
 
@@ -42,15 +46,15 @@ class Ui_Form(object):
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
-        self.enter_watse_type_name = QLineEdit(self.layoutWidget)
-        self.enter_watse_type_name.setObjectName(u"enter_watse_type_name")
+        self.enter_waste_type_name = QLineEdit(self.layoutWidget)
+        self.enter_waste_type_name.setObjectName(u"enter_waste_type_name")
         sizePolicy1 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.enter_watse_type_name.sizePolicy().hasHeightForWidth())
-        self.enter_watse_type_name.setSizePolicy(sizePolicy1)
+        sizePolicy1.setHeightForWidth(self.enter_waste_type_name.sizePolicy().hasHeightForWidth())
+        self.enter_waste_type_name.setSizePolicy(sizePolicy1)
 
-        self.horizontalLayout_2.addWidget(self.enter_watse_type_name)
+        self.horizontalLayout_2.addWidget(self.enter_waste_type_name)
 
         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -78,6 +82,6 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-        self.add_waste_type_label.setText(QCoreApplication.translate("Form", u"Create new waste type", None))
-        self.waste_type_name_label.setText(QCoreApplication.translate("Form", u"Enter new waste type name:", None))
+        self.add_waste_type_label.setText(QCoreApplication.translate("Form", u"Enter new waste type info:", None))
+        self.waste_type_name_label.setText(QCoreApplication.translate("Form", u"Waste type name", None))
     # retranslateUi

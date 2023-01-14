@@ -5,7 +5,7 @@ import string
 from PySide2.QtWidgets import QMainWindow, QApplication, QWidget, QComboBox
 from src.database.database import insert_into_table, show_table
 from ui import Ui_MainWindow
-from adding_window_classes import AddTransmitterWindow, AddWasteTypeWindow
+from adding_window_classes import AddTransmitterWindow, AddLocationWindow, AddWasteTypeWindow
 
 
 class Interface(QMainWindow):
@@ -31,7 +31,8 @@ class Interface(QMainWindow):
         pass
 
     def _add_location(self):
-        pass
+        self.widget = AddLocationWindow()
+        self.widget.show()
 
     def _remove_location(self):
         pass

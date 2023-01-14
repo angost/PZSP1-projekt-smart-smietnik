@@ -3,8 +3,8 @@ import string
 from PySide2.QtWidgets import QWidget, QComboBox
 from src.database.database import insert_into_table, show_table
 from ui_add_transmitter_window_copied import Ui_Form as Ui_Add_Transmitter_Window
+from ui_add_location_window_copied import Ui_Form as Ui_Add_Location_Window
 from ui_add_waste_type_window_copied import Ui_Form as Ui_Add_Waste_Type_Window
-
 
 class AddTransmitterWindow(QWidget):
     def __init__(self) -> None:
@@ -45,6 +45,29 @@ class AddTransmitterWindow(QWidget):
         identificator = get_random_string(9)
         transmitter_data = (waste_type_id, location_id, isActive, status, identificator)
         insert_into_table("src/database/pythonsqlite.db", "transmitter", transmitter_data)
+        self.hide()
+
+
+class AddLocationWindow(QWidget):
+    def __init__(self) -> None:
+        super().__init__()
+        self.ui = Ui_Add_Location_Window()
+        self.ui.setupUi(self)
+        self.ui.window_control.accepted.connect(self._get_new_location_data)
+        self.ui.window_control.rejected.connect(self._reject)
+
+    def _get_new_location_data(self):
+        country = self.ui.enter_country.text()
+        city = self.ui.enter_city.text()
+        street = self.ui.enter_street.text()
+        number = self.ui.enter_number.text()
+        notes = self.ui.enter_notes.text()
+        if country and city and street and number:
+            location_data = (country, city, street, number, notes)
+            insert_into_table("src/database/pythonsqlite.db", "location", location_data)
+            self.hide()
+
+    def _reject(self):
         self.hide()
 
 

@@ -55,6 +55,8 @@ def show_table(db_file, table_name):
         query = """ SELECT * FROM transmitter"""
     elif table_name == "waste_type":
         query = """ SELECT * FROM waste_type"""
+    elif table_name == "location":
+        query = """ SELECT * FROM location"""
 
     return operate_on_database(db_file, query, arguments=None)
 
