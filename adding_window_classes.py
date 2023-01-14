@@ -3,6 +3,8 @@ import string
 from PySide2.QtWidgets import QWidget, QComboBox
 from src.database.database import insert_into_table, show_table
 from ui_add_transmitter_window_copied import Ui_Form as Ui_Add_Transmitter_Window
+from ui_add_waste_type_window_copied import Ui_Form as Ui_Add_Waste_Type_Window
+
 
 class AddTransmitterWindow(QWidget):
     def __init__(self) -> None:
@@ -45,6 +47,24 @@ class AddTransmitterWindow(QWidget):
         insert_into_table("src/database/pythonsqlite.db", "transmitter", transmitter_data)
         self.hide()
 
+
+class AddWasteTypeWindow(QWidget):
+    def __init__(self) -> None:
+        super().__init__()
+        self.ui = Ui_Add_Waste_Type_Window()
+        self.ui.setupUi(self)
+        self.ui.window_control.accepted.connect(self._get_new_waste_type_data)
+        self.ui.window_control.rejected.connect(self._reject)
+
+    def _get_new_waste_type_data(self):
+        name = self.ui.enter_watse_type_name.text()
+        if name != '':
+            waste_type_data = (name,)
+            insert_into_table("src/database/pythonsqlite.db", "waste_type", waste_type_data)
+            self.hide()
+
+    def _reject(self):
+        self.hide()
 
 
 # It's only fo testing usage

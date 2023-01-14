@@ -5,7 +5,7 @@ import string
 from PySide2.QtWidgets import QMainWindow, QApplication, QWidget, QComboBox
 from src.database.database import insert_into_table, show_table
 from ui import Ui_MainWindow
-from adding_window_classes import AddTransmitterWindow
+from adding_window_classes import AddTransmitterWindow, AddWasteTypeWindow
 
 
 class Interface(QMainWindow):
@@ -37,7 +37,8 @@ class Interface(QMainWindow):
         pass
 
     def _add_waste_type(self):
-        pass
+        self.widget = AddWasteTypeWindow()
+        self.widget.show()
 
     def _remove_waste_type(self):
         pass
