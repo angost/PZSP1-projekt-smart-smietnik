@@ -1,6 +1,6 @@
 from PySide2.QtWidgets import QWidget, QTableWidgetItem
-from ui_show_locations import Ui_locationsWidget
-from ui_show_waste_types import Ui_wasteTypeWidget
+from ui_python_files.ui_show_locations import Ui_locationsWidget
+from ui_python_files.ui_show_waste_types import Ui_wasteTypeWidget
 from PySide2.QtCore import Qt
 from src.database.database import show_table
 

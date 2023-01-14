@@ -2,9 +2,10 @@ import random
 import string
 from PySide2.QtWidgets import QWidget, QComboBox
 from src.database.database import insert_into_table, show_table
-from ui_add_transmitter_window_copied import Ui_Form as Ui_Add_Transmitter_Window
-from ui_add_location_window_copied import Ui_Form as Ui_Add_Location_Window
-from ui_add_waste_type_window_copied import Ui_Form as Ui_Add_Waste_Type_Window
+from ui_python_files.ui_add_transmitter_window_copied import Ui_Form as Ui_Add_Transmitter_Window
+from ui_python_files.ui_add_location_window_copied import Ui_Form as Ui_Add_Location_Window
+from ui_python_files.ui_add_waste_type_window_copied import Ui_Form as Ui_Add_Waste_Type_Window
+
 
 class AddTransmitterWindow(QWidget):
     def __init__(self) -> None:
