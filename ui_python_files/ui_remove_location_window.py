@@ -66,4 +66,3 @@ class Ui_RemoveLocation(object):
         RemoveLocation.setWindowTitle(QCoreApplication.translate("RemoveLocation", u"RemoveLocation", None))
         self.label.setText(QCoreApplication.translate("RemoveLocation", u"Choose which location you would like to remove:", None))
     # retranslateUi
-

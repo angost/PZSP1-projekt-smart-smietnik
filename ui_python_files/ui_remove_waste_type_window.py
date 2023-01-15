@@ -66,3 +66,4 @@ class Ui_RemoveWasteType(object):
         RemoveWasteType.setWindowTitle(QCoreApplication.translate("RemoveWasteType", u"RemoveWasteType", None))
         self.label.setText(QCoreApplication.translate("RemoveWasteType", u"Choose which type of waste you would like to remove:", None))
     # retranslateUi
+    

@@ -75,4 +75,3 @@ class RemoveWasteTypeWindow(QWidget):
         waste_type_to_remove = str(data[waste_type_index][0])
         delete_record('src/database/pythonsqlite.db', 'waste_type', waste_type_to_remove)
         self.hide()
-

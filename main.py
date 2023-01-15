@@ -6,6 +6,7 @@ from adding_window_classes import AddTransmitterWindow, AddLocationWindow, AddWa
 from show_location_waste_type_classes import ShowLocations, ShowWasteTypes
 from removing_window_classes import RemoveTransmitterWindow, RemoveLocationWindow, RemoveWasteTypeWindow
 
+
 class Interface(QMainWindow):
     def __init__(self):
         super().__init__()

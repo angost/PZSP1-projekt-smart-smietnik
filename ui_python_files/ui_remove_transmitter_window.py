@@ -58,7 +58,7 @@ class Ui_RemoveTransmitter(object):
 
 
         self.retranslateUi(RemoveTransmitter)
-        
+
 
         QMetaObject.connectSlotsByName(RemoveTransmitter)
     # setupUi
@@ -67,4 +67,3 @@ class Ui_RemoveTransmitter(object):
         RemoveTransmitter.setWindowTitle(QCoreApplication.translate("RemoveTransmitter", u"RemoveTransmitter", None))
         self.label.setText(QCoreApplication.translate("RemoveTransmitter", u"Choose which transmitter you would like to remove:", None))
     # retranslateUi
-
