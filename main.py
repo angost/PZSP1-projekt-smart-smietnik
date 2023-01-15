@@ -4,7 +4,7 @@ from PySide2.QtCore import Qt
 from ui_main_window import Ui_MainWindow
 from adding_window_classes import AddTransmitterWindow, AddLocationWindow, AddWasteTypeWindow
 from show_location_waste_type_classes import ShowLocations, ShowWasteTypes
-
+from removing_window_classes import RemoveTransmitterWindow, RemoveLocationWindow, RemoveWasteTypeWindow
 
 class Interface(QMainWindow):
     def __init__(self):
@@ -18,6 +18,9 @@ class Interface(QMainWindow):
         self.ui.actionShow_all_transmitters.triggered.connect(self._show_transmitters_table)
         self.ui.actionShow_all_locations.triggered.connect(self._show_locations)
         self.ui.actionShow_all_waste_types.triggered.connect(self._show_waste_types)
+        self.ui.actionRemove_trasmitter.triggered.connect(self._remove_transmitter)
+        self.ui.actionRemove_location.triggered.connect(self._remove_location)
+        self.ui.actionRemove_waste_type.triggered.connect(self._remove_waste_type)
 
     def _get_full_and_all_dumpsters(self):
         # trzeba dopisać końcówkę, która zwraca tylko te recordy których status to 1
@@ -86,15 +89,17 @@ class Interface(QMainWindow):
         self.widget = AddWasteTypeWindow()
         self.widget.show()
 
-    # Kacper
     def _remove_transmitter(self):
-        pass
+        self.widget = RemoveTransmitterWindow()
+        self.widget.show()
 
     def _remove_location(self):
-        pass
+        self.widget = RemoveLocationWindow()
+        self.widget.show()
 
     def _remove_waste_type(self):
-        pass
+        self.widget = RemoveWasteTypeWindow()
+        self.widget.show()
 
     # filters, later
     def _show_only_given_waste_type(self):

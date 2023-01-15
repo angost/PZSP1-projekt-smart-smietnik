@@ -80,6 +80,9 @@ def delete_record(db_file, table_name, id):
         query = """DELETE FROM location WHERE ID = ?"""
     elif table_name == "transmitter":
         query = """DELETE FROM transmitter WHERE ID = ?;"""
+    # dopisane
+    elif table_name == "waste_type":
+        query = """DELETE FROM waste_type WHERE ID = ?;"""
     operate_on_database(db_file, query, id)
 
 
