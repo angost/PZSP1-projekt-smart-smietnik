@@ -91,6 +91,9 @@ def operate_on_database(db_file, query, arguments):
     try:
         sqliteConnection = create_connection(db_file)
         cursor = sqliteConnection.cursor()
+        # nie mam pojęcia jak to inaczej zostawić, żeby nic innego się nie rozjechało
+        if query[0:6] == "DELETE":
+            arguments = [arguments]
         if arguments is not None:
             cursor.execute(query, arguments)
         else:
