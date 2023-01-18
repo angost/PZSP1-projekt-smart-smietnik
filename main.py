@@ -1,5 +1,4 @@
 from PySide2.QtWidgets import QMainWindow, QApplication, QTableWidgetItem
-from src.database.database import show_table, show_table_depending_on
 from PySide2.QtCore import Qt
 from ui_main_window import Ui_MainWindow
 from adding_window_classes import AddTransmitterWindow, AddLocationWindow, AddWasteTypeWindow
@@ -27,9 +26,9 @@ class Interface(QMainWindow):
     def _get_full_and_all_dumpsters(self):
         # trzeba dopisać końcówkę, która zwraca tylko te recordy których status to 1
         # na razie jest to dopisane to do show_table_depending_on
-        full_list = show_table_depending_on("src/database/pythonsqlite.db", "transmitter", "status", "1")
-        table = show_table("src/database/pythonsqlite.db", "transmitter")
-        return len(full_list), len(table)
+        full_list = requests.get(domain + 'get-transmitters-where-status?status=' + str(0)).json()
+        trasmitters = requests.get(domain + 'get-all-transmitters').json()
+        return len(full_list), len(trasmitters)
 
     def _set_text_label(self):
         full, all = self._get_full_and_all_dumpsters()
@@ -49,7 +48,7 @@ class Interface(QMainWindow):
         for i, transmitter in enumerate(trasmitters):
             item_id = QTableWidgetItem(str(transmitter['id']))
             item_waste_type_id = QTableWidgetItem(str(transmitter['waste_type']))
-            item_location_id = QTableWidgetItem(str(transmitter['location']['city']))# poki co ustawione zeby nie wysylac bledy, zmienie w serwerze zeby id location tez sie wysylalo
+            item_location_id = QTableWidgetItem(str(transmitter['id']))# poki co ustawione zeby nie wysylac bledy, zmienie w serwerze zeby id location tez sie wysylalo
             item_is_active = QTableWidgetItem(str(transmitter['active']))
             item_status = QTableWidgetItem(str(transmitter['status']))
             item_identity = QTableWidgetItem(transmitter['identificator'])

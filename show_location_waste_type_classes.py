@@ -2,8 +2,8 @@ from PySide2.QtWidgets import QWidget, QTableWidgetItem
 from ui_python_files.ui_show_locations import Ui_locationsWidget
 from ui_python_files.ui_show_waste_types import Ui_wasteTypeWidget
 from PySide2.QtCore import Qt
-from src.database.database import show_table
-
+import requests
+from domain import domain
 
 class ShowLocations(QWidget):
     def __init__(self) -> None:
@@ -13,18 +13,18 @@ class ShowLocations(QWidget):
         self._show_locations()
 
     def _show_locations(self):
-        locations = show_table("src/database/pythonsqlite.db", "location")
+        locations = requests.get(domain + 'get-all-locations').json()
         table = self.ui.locationsTable
         table.setRowCount(len(locations))
         table.setColumnCount(6)
         table.setHorizontalHeaderLabels(["Id", "Country", "City", "Street", "Number", "Notes"])
         for i, location in enumerate(locations):
-            item_id = QTableWidgetItem(str(location[0]))
-            item_country = QTableWidgetItem(location[1])
-            item_city = QTableWidgetItem(location[2])
-            item_street = QTableWidgetItem(location[3])
-            item_number = QTableWidgetItem(str(location[4]))
-            item_notes = QTableWidgetItem(location[5])
+            item_id = QTableWidgetItem(str(location['id']))
+            item_country = QTableWidgetItem(location['country'])
+            item_city = QTableWidgetItem(location['city'])
+            item_street = QTableWidgetItem(location['street'])
+            item_number = QTableWidgetItem(str(location['number']))
+            item_notes = QTableWidgetItem(location['notes'])
             item_id.setFlags(item_id.flags() ^ Qt.ItemIsEditable)
             item_country.setFlags(item_country.flags() ^ Qt.ItemIsEditable)
             item_city.setFlags(item_city.flags() ^ Qt.ItemIsEditable)
@@ -48,14 +48,14 @@ class ShowWasteTypes(QWidget):
         self._show_waste_types()
 
     def _show_waste_types(self):
-        waste_types = show_table("src/database/pythonsqlite.db", "waste_type")
+        waste_types = requests.get(domain + 'show-all-waste-types').json()
         table = self.ui.wasteTypeTable
         table.setRowCount(len(waste_types))
         table.setColumnCount(2)
         table.setHorizontalHeaderLabels(["Id", "Waste name"])
         for i, waste_type in enumerate(waste_types):
-            item_id = QTableWidgetItem(str(waste_type[0]))
-            item_name = QTableWidgetItem(waste_type[1])
+            item_id = QTableWidgetItem(str(waste_type['id']))
+            item_name = QTableWidgetItem(waste_type['name'])
             item_id.setFlags(item_id.flags() ^ Qt.ItemIsEditable)
             item_name.setFlags(item_name.flags() ^ Qt.ItemIsEditable)
             table.setItem(i, 0, item_id)
