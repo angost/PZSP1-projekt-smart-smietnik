@@ -1,0 +1,1 @@
+domain = 'https://turn-waste2.herokuapp.com/'

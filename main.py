@@ -5,7 +5,8 @@ from ui_main_window import Ui_MainWindow
 from adding_window_classes import AddTransmitterWindow, AddLocationWindow, AddWasteTypeWindow
 from show_location_waste_type_classes import ShowLocations, ShowWasteTypes
 from removing_window_classes import RemoveTransmitterWindow, RemoveLocationWindow, RemoveWasteTypeWindow
-
+import requests
+from domain import domain
 
 class Interface(QMainWindow):
     def __init__(self):
@@ -40,20 +41,18 @@ class Interface(QMainWindow):
         self.ui.progressBar.setValue(value)
 
     def _show_transmitters_table(self):
-        trasmitters = show_table("src/database/pythonsqlite.db", "transmitter")
+        trasmitters = requests.get(domain + 'get-all-transmitters').json()
         table = self.ui.transmittersTable
         table.setRowCount(len(trasmitters))
         table.setColumnCount(6)
-        table.setHorizontalHeaderLabels(["Id", "Waste type id", "Location id", "Active", "Full", "Text Identificator"])
+        table.setHorizontalHeaderLabels(["Id", "Waste type id", "Location id", "Active", "Status [%]", "Text Identificator"])
         for i, transmitter in enumerate(trasmitters):
-            is_active = "True" if transmitter[3] else "False"
-            status = "True" if transmitter[4] else "False"
-            item_id = QTableWidgetItem(str(transmitter[0]))
-            item_waste_type_id = QTableWidgetItem(str(transmitter[1]))
-            item_location_id = QTableWidgetItem(str(transmitter[2]))
-            item_is_active = QTableWidgetItem(is_active)
-            item_status = QTableWidgetItem(status)
-            item_identity = QTableWidgetItem(transmitter[5])
+            item_id = QTableWidgetItem(str(transmitter['id']))
+            item_waste_type_id = QTableWidgetItem(str(transmitter['waste_type']))
+            item_location_id = QTableWidgetItem(str(transmitter['location']['city']))# poki co ustawione zeby nie wysylac bledy, zmienie w serwerze zeby id location tez sie wysylalo
+            item_is_active = QTableWidgetItem(str(transmitter['active']))
+            item_status = QTableWidgetItem(str(transmitter['status']))
+            item_identity = QTableWidgetItem(transmitter['identificator'])
             item_id.setFlags(item_id.flags() ^ Qt.ItemIsEditable)
             item_waste_type_id.setFlags(item_waste_type_id.flags() ^ Qt.ItemIsEditable)
             item_location_id.setFlags(item_location_id.flags() ^ Qt.ItemIsEditable)

@@ -1,11 +1,13 @@
+import json
 import random
 import string
 from PySide2.QtWidgets import QWidget, QComboBox
-from src.database.database import insert_into_table, show_table
+
+from domain import domain
 from ui_python_files.ui_add_transmitter_window_copied import Ui_Form as Ui_Add_Transmitter_Window
 from ui_python_files.ui_add_location_window_copied import Ui_Form as Ui_Add_Location_Window
 from ui_python_files.ui_add_waste_type_window_copied import Ui_Form as Ui_Add_Waste_Type_Window
-
+import requests
 
 class AddTransmitterWindow(QWidget):
     def __init__(self) -> None:
@@ -18,34 +20,40 @@ class AddTransmitterWindow(QWidget):
         self.ui.window_control.rejected.connect(self._reject)
 
     def _setup_waste_type_dropdown(self):
-        data = show_table("src/database/pythonsqlite.db", "waste_type")
-        for item in data:
-            self.ui.select_waste_type_dropdown.addItem(item[1])
+        waste_type_data = requests.get(domain + 'show-all-waste-types').json()
+        for item in waste_type_data:
+            self.ui.select_waste_type_dropdown.addItem(item['name'])
 
     def _setup_location_dropdown(self):
-        # Potrzebuję końcówki show_table(location)
-        data = show_table("src/database/pythonsqlite.db", "location")
-        for item in data:
-            item_data = [str(i) for i in item[1:]]
+        location_data = requests.get(domain + 'get-all-locations').json()
+        jsn_list = json.loads(json.dumps(location_data))
+
+        for item in jsn_list:
+            item_data = [str(val) for key, val in item.items()]
             self.ui.select_location_dropdown.addItem(', '.join(item_data))
 
     def _reject(self):
         self.hide()
 
     def _get_new_transmitter_data(self):
-        waste_type_data = show_table("src/database/pythonsqlite.db", "waste_type")
+        waste_type_data = requests.get(domain + 'show-all-waste-types').json()
         chosen_waste_type_dropdown_id = self.ui.select_waste_type_dropdown.currentIndex()
-        waste_type_id = waste_type_data[chosen_waste_type_dropdown_id][0]
+        waste_type_id = waste_type_data[chosen_waste_type_dropdown_id]['id']
 
-        location_data = show_table("src/database/pythonsqlite.db", "location")
+        location_data = requests.get(domain + '/get-all-locations').json()
         chosen_location_dropdown_id = self.ui.select_location_dropdown.currentIndex()
-        location_id = location_data[chosen_location_dropdown_id][0]
-
-        isActive = 1
-        status = 0
+        location_id = location_data[chosen_location_dropdown_id]['id']
         identificator = get_random_string(9)
-        transmitter_data = (waste_type_id, location_id, isActive, status, identificator)
-        insert_into_table("src/database/pythonsqlite.db", "transmitter", transmitter_data)
+
+        transmitter_data = {
+            "waste_type_id": waste_type_id,
+            "location_id": location_id,
+            "active": "True",
+            "status": 0,
+            "identificator": identificator,
+        }
+        response = requests.post(domain + '/add-transmitter', json=transmitter_data)
+        print("Status Code", response.status_code)
         self.hide()
 
 
@@ -64,8 +72,15 @@ class AddLocationWindow(QWidget):
         number = self.ui.enter_number.text()
         notes = self.ui.enter_notes.text()
         if country and city and street and number:
-            location_data = (country, city, street, number, notes)
-            insert_into_table("src/database/pythonsqlite.db", "location", location_data)
+            location_data = {
+                "country": country,
+                "city": city,
+                "street": street,
+                "number": number,
+                "notes": notes,
+            }
+            response = requests.post(domain + '/add-location', json=location_data)
+            print("Status Code", response.status_code)
             self.hide()
 
     def _reject(self):
@@ -83,8 +98,11 @@ class AddWasteTypeWindow(QWidget):
     def _get_new_waste_type_data(self):
         name = self.ui.enter_waste_type_name.text()
         if name != '':
-            waste_type_data = (name,)
-            insert_into_table("src/database/pythonsqlite.db", "waste_type", waste_type_data)
+            waste_type_data = {
+                "name": name,
+            }
+            response = requests.post(domain + 'add-waste-type', json=waste_type_data)
+            print("Status Code", response.status_code)
             self.hide()
 
     def _reject(self):

@@ -1,9 +1,11 @@
 from PySide2.QtWidgets import QWidget
+
+from domain import domain
 from ui_python_files.ui_remove_transmitter_window import Ui_RemoveTransmitter
 from ui_python_files.ui_remove_location_window import Ui_RemoveLocation
 from ui_python_files.ui_remove_waste_type_window import Ui_RemoveWasteType
 from src.database.database import show_table, delete_record
-
+import requests
 
 class RemoveTransmitterWindow(QWidget):
     def __init__(self):
@@ -15,17 +17,19 @@ class RemoveTransmitterWindow(QWidget):
         self.ui.buttonBox.accepted.connect(self._remove_transmitter_database)
 
     def _transmitter_dropdown_list(self):
-        data = show_table('src/database/pythonsqlite.db', 'transmitter')
-        self.ui.comboBox.addItems([transmitter[-1] for transmitter in data])
+        data = requests.get(domain + 'get-all-transmitters').json()
+        self.ui.comboBox.addItems([transmitter['identificator'] for transmitter in data])
 
     def _close_window(self):
         self.hide()
 
     def _remove_transmitter_database(self):
-        data = show_table('src/database/pythonsqlite.db', 'transmitter')
+        data = requests.get(domain + 'get-all-transmitters').json()
         transmitter_index = self.ui.comboBox.currentIndex()
-        transmitter_to_remove = str(data[transmitter_index][0])
-        delete_record('src/database/pythonsqlite.db', 'transmitter', transmitter_to_remove)
+        transmitter_to_remove = str(data[transmitter_index]['id'])
+        print(transmitter_to_remove)
+        response = requests.get(domain + 'delete-transmitter?id=' + str(transmitter_to_remove))
+        print("Status Code", response.status_code)
         self.hide()
 
 
