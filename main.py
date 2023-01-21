@@ -24,9 +24,7 @@ class Interface(QMainWindow):
         self.ui.actionRemove_waste_type.triggered.connect(self._remove_waste_type)
 
     def _get_full_and_all_dumpsters(self):
-        # trzeba dopisać końcówkę, która zwraca tylko te recordy których status to 1
-        # na razie jest to dopisane to do show_table_depending_on
-        full_list = requests.get(domain + 'get-transmitters-where-status?status=' + str(0)).json()
+        full_list = requests.get(domain + 'get-transmitters-where-status?status=' + str(90)).json()
         trasmitters = requests.get(domain + 'get-all-transmitters').json()
         return len(full_list), len(trasmitters)
 
@@ -44,11 +42,11 @@ class Interface(QMainWindow):
         table = self.ui.transmittersTable
         table.setRowCount(len(trasmitters))
         table.setColumnCount(6)
-        table.setHorizontalHeaderLabels(["Id", "Waste type id", "Location id", "Active", "Status [%]", "Text Identificator"])
+        table.setHorizontalHeaderLabels(["Id", "Waste type", "Location id", "Active", "Status [%]", "Text Identificator"])
         for i, transmitter in enumerate(trasmitters):
             item_id = QTableWidgetItem(str(transmitter['id']))
             item_waste_type_id = QTableWidgetItem(str(transmitter['waste_type']))
-            item_location_id = QTableWidgetItem(str(transmitter['id']))# poki co ustawione zeby nie wysylac bledy, zmienie w serwerze zeby id location tez sie wysylalo
+            item_location_id = QTableWidgetItem(str(transmitter['id']))
             item_is_active = QTableWidgetItem(str(transmitter['active']))
             item_status = QTableWidgetItem(str(transmitter['status']))
             item_identity = QTableWidgetItem(transmitter['identificator'])
