@@ -1,11 +1,11 @@
 from PySide2.QtWidgets import QMainWindow, QApplication, QTableWidgetItem
-from src.database.database import show_table, show_table_depending_on
 from PySide2.QtCore import Qt
 from ui_main_window import Ui_MainWindow
 from adding_window_classes import AddTransmitterWindow, AddLocationWindow, AddWasteTypeWindow
 from show_location_waste_type_classes import ShowLocations, ShowWasteTypes
 from removing_window_classes import RemoveTransmitterWindow, RemoveLocationWindow, RemoveWasteTypeWindow
-
+import requests
+from domain import domain
 
 class Interface(QMainWindow):
     def __init__(self):
@@ -24,11 +24,9 @@ class Interface(QMainWindow):
         self.ui.actionRemove_waste_type.triggered.connect(self._remove_waste_type)
 
     def _get_full_and_all_dumpsters(self):
-        # trzeba dopisać końcówkę, która zwraca tylko te recordy których status to 1
-        # na razie jest to dopisane to do show_table_depending_on
-        full_list = show_table_depending_on("src/database/pythonsqlite.db", "transmitter", "status", "1")
-        table = show_table("src/database/pythonsqlite.db", "transmitter")
-        return len(full_list), len(table)
+        full_list = requests.get(domain + 'get-transmitters-where-status?status=' + str(90)).json()
+        trasmitters = requests.get(domain + 'get-all-transmitters').json()
+        return len(full_list), len(trasmitters)
 
     def _set_text_label(self):
         full, all = self._get_full_and_all_dumpsters()
@@ -40,20 +38,18 @@ class Interface(QMainWindow):
         self.ui.progressBar.setValue(value)
 
     def _show_transmitters_table(self):
-        trasmitters = show_table("src/database/pythonsqlite.db", "transmitter")
+        trasmitters = requests.get(domain + 'get-all-transmitters').json()
         table = self.ui.transmittersTable
         table.setRowCount(len(trasmitters))
         table.setColumnCount(6)
-        table.setHorizontalHeaderLabels(["Id", "Waste type id", "Location id", "Active", "Full", "Text Identificator"])
+        table.setHorizontalHeaderLabels(["Id", "Waste type", "Location id", "Active", "Status [%]", "Text Identificator"])
         for i, transmitter in enumerate(trasmitters):
-            is_active = "True" if transmitter[3] else "False"
-            status = "True" if transmitter[4] else "False"
-            item_id = QTableWidgetItem(str(transmitter[0]))
-            item_waste_type_id = QTableWidgetItem(str(transmitter[1]))
-            item_location_id = QTableWidgetItem(str(transmitter[2]))
-            item_is_active = QTableWidgetItem(is_active)
-            item_status = QTableWidgetItem(status)
-            item_identity = QTableWidgetItem(transmitter[5])
+            item_id = QTableWidgetItem(str(transmitter['id']))
+            item_waste_type_id = QTableWidgetItem(str(transmitter['waste_type']))
+            item_location_id = QTableWidgetItem(str(transmitter['id']))
+            item_is_active = QTableWidgetItem(str(transmitter['active']))
+            item_status = QTableWidgetItem(str(transmitter['status']))
+            item_identity = QTableWidgetItem(transmitter['identificator'])
             item_id.setFlags(item_id.flags() ^ Qt.ItemIsEditable)
             item_waste_type_id.setFlags(item_waste_type_id.flags() ^ Qt.ItemIsEditable)
             item_location_id.setFlags(item_location_id.flags() ^ Qt.ItemIsEditable)
